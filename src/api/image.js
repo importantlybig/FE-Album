@@ -87,6 +87,29 @@ export const shareImageToUser = async (imageId, userShareId) => {
   }
 };
 
+export const updateImage = async (imageId, updateName) => {
+  const token = getToken();
+  try {
+    const { data } = await axiosInterceptor.patch(
+      `http://localhost:8000/api/image/update-image/${imageId}`,
+      { updateName },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          accept: "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    const { response } = error;
+    if (response?.data) return response.data;
+
+    return { error: error.message || error };
+  }
+};
+
 export const deleteImage = async (imageId) => {
   const token = getToken();
   try {

@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { deleteImage, uploadSingleImage } from "../api/image";
 import { useNotification } from "../hooks";
-import { fetchImageByAlbumId, shareImageToUser } from "../api/image";
+import {
+  fetchImageByAlbumId,
+  shareImageToUser,
+  updateImage,
+} from "../api/image";
 import UpdateImageForm from "../components/UpdateImageForm";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -13,7 +17,7 @@ import UserList from "../components/UserList";
 
 const SingleAlbum = () => {
   const [name, setName] = useState("");
-  // const [nowSelect, setNowSelect] = useState(null);
+  const [updateName, setUpdateName] = useState("");
   const [singleImage, setSingleImage] = useState("");
   const [previewSingleImage, setPreviewSingleImage] = useState("");
   const [uploadStatus, setUploadStatus] = useState(false);
@@ -29,21 +33,21 @@ const SingleAlbum = () => {
   const [selectUserShareId, setSelectUserShareId] = useState("");
   const [selectImageId, setSelectImageId] = useState("");
 
-  // console.log(selectUserShareId);
+  // console.log('update name value');
+  // console.log(updateName);
 
   const handleShareAndOpenModal = (image) => {
     setOpenShareModal(true);
-    // setNowSelect(image);
-    console.log("image id");
-    console.log(image?._id);
+    // console.log("image id in share");
+    // console.log(image?._id);
     setSelectImageId(image?._id);
-    // console.log("clicked");
   };
 
   const handleUpdateAndOpenModal = (image) => {
     setOpenUpdateModal(true);
     console.log("image id in update modal");
     console.log(image?._id);
+    setSelectImageId(image?._id);
   };
 
   const handleDeleteAndOpenModal = (image) => {
@@ -145,6 +149,18 @@ const SingleAlbum = () => {
     }
   };
 
+  const submitUpdate = async () => {
+    console.log("update image click");
+    if (selectImageId) {
+      const { success, error } = await updateImage(selectImageId, updateName);
+      if (error) return updateNotification("error", error);
+      if (success) {
+        updateNotification("success", success);
+        window.location.reload();
+      }
+    }
+  };
+
   useEffect(() => {
     if (!singleImage) {
       setPreviewSingleImage(undefined);
@@ -185,14 +201,17 @@ const SingleAlbum = () => {
       )}
 
       {openUpdateModal && (
-        <Modal setOpenModal={setOpenUpdateModal} handleSubmit={submitDelete}>
+        <Modal setOpenModal={setOpenUpdateModal} handleSubmit={submitUpdate}>
           <h3
             className="title margin-top margin-bottom"
             style={{ textTransform: "uppercase" }}
           >
             Choose the new name to image
           </h3>
-          <UpdateImageForm />
+          <UpdateImageForm
+            updateName={updateName}
+            setUpdateName={setUpdateName}
+          />
         </Modal>
       )}
       <h3 className="center-text margin-bottom margin-top">

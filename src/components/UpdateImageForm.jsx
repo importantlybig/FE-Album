@@ -1,6 +1,6 @@
 import React from "react";
 
-const UpdateImageForm = () => {
+const UpdateImageForm = ({ updateName, setUpdateName }) => {
   return (
     <>
       <div className="inline-block update-image">
@@ -12,8 +12,8 @@ const UpdateImageForm = () => {
           name="name"
           placeholder="Enter new image name"
           style={{ marginLeft: "10px" }}
-          //   onChange={(e) => setName(e.target.value)}
-          //   value={name}
+          onChange={(e) => setUpdateName(e.target.value)}
+          value={updateName}
         />
       </div>
     </>
