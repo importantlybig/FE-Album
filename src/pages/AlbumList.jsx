@@ -11,6 +11,9 @@ const AlbumList = () => {
   const [loading, setLoading] = useState(false);
   const [albumInfo, setAlbumInfo] = useState([]);
 
+  console.log("album info logs");
+  console.log(albumInfo);
+
   const { updateNotification } = useNotification();
   const { authInfo } = useAuth();
   const ownerId = authInfo?.userData?.id;

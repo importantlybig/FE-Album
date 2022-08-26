@@ -450,6 +450,43 @@ nav ul li a.currentPage {
   cursor: pointer;
 }
 
+div.container .change-upload-mode {
+  display: inline-block;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 0.25rem 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  /* justify-contvent: center; */
+  color: #333;
+  cursor: pointer;
+}
+
+/* PREVIEW form image */
+.preview-multi-wrap {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.preview-multi-style {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-multi-style input {
+  padding: 0.3rem 0rem;
+  display: inline-block;
+  margin: 0.5rem 0;
+  width: 140px !important;
+  font-family: inherit;
+  color: inherit;
+  border-radius: 4px;
+  
+}
+
 .create-album .create-album-button:hover {
   background-color: #F7CC15;
   border: 1px solid black;

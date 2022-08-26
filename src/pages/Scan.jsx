@@ -9,19 +9,22 @@ const Scan = () => {
   const [QR, setQR] = useState("");
   const [show, setShow] = useState(false);
   const [tokenOTP, setTokenOTP] = useState("");
-  const base32Secret = localStorage.getItem("base32Secret");
 
   const navigate = useNavigate();
   const { exportUserData } = useAuth();
   const { updateNotification } = useNotification();
 
+  const base32Secret = exportUserData?.base32Secret;
+
+  console.log("user data at scan page");
+  console.log(exportUserData);
+
   const verify = exportUserData?.isVerify;
 
   const handleEnable2FA = async () => {
-    const { renderQR, base32Secret, error } = await enable2FA();
+    const { renderQR, error } = await enable2FA();
     if (error) return updateNotification("error", error);
     setQR(renderQR);
-    localStorage.setItem("base32Secret", base32Secret);
 
     setShow(true);
   };

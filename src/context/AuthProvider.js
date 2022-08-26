@@ -55,6 +55,8 @@ export default function AuthProvider({ children }) {
 
       //millisecond
       if (decodedToken.exp < date.getTime() / 1000) {
+        console.log("log out time");
+
         const data = await refreshToken();
         // console.log("dataaaaaaaaa");
         // console.log(data);
@@ -149,6 +151,9 @@ export default function AuthProvider({ children }) {
       error: "",
     });
   };
+
+  console.log("userData");
+  console.log(authInfo?.userData);
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
